@@ -3,4 +3,5 @@
 NAME="log4cpp"
 URL="https://github.com/msaf1980/${NAME}"
 DIR=$( dirname $0 )
-git-build-rpm -u "${URL}" -s "${DIR}/${NAME}.spec"
+[ "${DIR}" == "." ] && SPEC="${NAME}.spec" || SPEC="${DIR}/${NAME}.spec"
+git-build-rpm -u "${URL}" -s "${SPEC}"
