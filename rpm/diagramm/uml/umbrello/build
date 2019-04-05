@@ -1,0 +1,7 @@
+#!/bin/bash
+
+NAME="umbrello"
+URL="git://anongit.kde.org/umbrello"
+DIR=$( dirname $0 )
+[ "${DIR}" == "." ] && SPEC="${NAME}.spec" || SPEC="${DIR}/${NAME}.spec"
+git-build-rpm -u "${URL}" -s "${SPEC}"

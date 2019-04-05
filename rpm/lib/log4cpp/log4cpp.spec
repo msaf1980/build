@@ -8,7 +8,7 @@ Summary:        C++ logging library
 Group:          Development/Libraries
 License:        LGPLv2+
 URL:            http://sourceforge.net/projects/log4cpp/
-Source0:        http://downloads.sourceforge.net/log4cpp/%{name}-%{version}.%{rel}.tbz
+Source0:        %{name}-%{version}.%{rel}.tbz
 
 BuildRequires:  gcc-c++
 BuildRequires:  doxygen
