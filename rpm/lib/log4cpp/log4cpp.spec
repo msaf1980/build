@@ -43,7 +43,7 @@ If you like to documentation to develop programs using %{name},
 you will need to install %{name}-devel.
 
 %prep
-%setup -n %{name}-%{version}.%{rel}
+%setup -n %{name}
 #Convert line endings.
 iconv -f iso8859-1 -t utf-8 ChangeLog > ChangeLog.conv && mv -f ChangeLog.conv ChangeLog
 

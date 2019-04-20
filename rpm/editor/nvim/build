@@ -1,0 +1,7 @@
+#!/bin/bash
+
+NAME="neovim"
+URL="https://github.com/neovim/neovim"
+DIR=$( dirname $0 )
+[ "${DIR}" == "." ] && SPEC="${NAME}.spec" || SPEC="${DIR}/${NAME}.spec"
+git-build-rpm -n "${NAME}" -u "${URL}" -s "${SPEC}" -b release-0.3
