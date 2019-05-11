@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NAME="uncrustify"
+URL="http://github.com/uncrustify/uncrustify"
+DIR=$( dirname $0 )
+
+[ "${DIR}" == "." ] && SPEC="${NAME}.spec" || SPEC="${DIR}/${NAME}.spec"
+git-build-rpm -n "${NAME}" -u "${URL}" -s "${SPEC}"
