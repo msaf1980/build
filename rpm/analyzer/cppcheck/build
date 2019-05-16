@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NAME="cppcheck"
+URL="https://github.com/danmar/cppcheck"
+DIR=$( dirname $0 )
+
+[ "${DIR}" == "." ] && SPEC="${NAME}.spec" || SPEC="${DIR}/${NAME}.spec"
+git-build-rpm -n "${NAME}" -u "${URL}"

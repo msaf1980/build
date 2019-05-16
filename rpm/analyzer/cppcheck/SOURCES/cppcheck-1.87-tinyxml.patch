@@ -1,0 +1,84 @@
+diff -urp cppcheck-1.87.orig/cli/CMakeLists.txt cppcheck-1.87/cli/CMakeLists.txt
+--- cppcheck-1.87.orig/cli/CMakeLists.txt	2019-02-09 03:31:27.000000000 -0500
++++ cppcheck-1.87/cli/CMakeLists.txt	2019-02-09 13:31:37.543470390 -0500
+@@ -1,5 +1,4 @@
+ include_directories(${PROJECT_SOURCE_DIR}/lib/)
+-include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/externals/tinyxml/)
+ include_directories(${PROJECT_SOURCE_DIR}/externals/simplecpp/)
+ 
+ file(GLOB hdrs "*.h")
+@@ -8,7 +7,7 @@ file(GLOB mainfile "main.cpp")
+ list(REMOVE_ITEM srcs ${mainfile})
+ 
+ add_library(cli_objs OBJECT ${hdrs} ${srcs}) 
+-add_executable(cppcheck ${hdrs} ${mainfile} $<TARGET_OBJECTS:cli_objs> $<TARGET_OBJECTS:lib_objs> $<TARGET_OBJECTS:tinyxml_objs> $<TARGET_OBJECTS:simplecpp_objs>)
++add_executable(cppcheck ${hdrs} ${mainfile} $<TARGET_OBJECTS:cli_objs> $<TARGET_OBJECTS:lib_objs> $<TARGET_OBJECTS:simplecpp_objs>)
+ if (HAVE_RULES)
+     find_library(PCRE_LIBRARY pcre)
+     target_link_libraries(cppcheck ${PCRE_LIBRARY})
+@@ -18,6 +17,7 @@ endif()
+ if (WIN32 AND NOT BORLAND)
+     target_link_libraries(cppcheck Shlwapi.lib)
+ endif()
++target_link_libraries(cppcheck tinyxml2)
+ 
+ install(TARGETS cppcheck
+     RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
+diff -urp cppcheck-1.87.orig/CMakeLists.txt cppcheck-1.87/CMakeLists.txt
+--- cppcheck-1.87.orig/CMakeLists.txt	2019-02-09 03:31:27.000000000 -0500
++++ cppcheck-1.87/CMakeLists.txt	2019-02-09 13:30:01.410480706 -0500
+@@ -16,7 +16,6 @@ if (BUILD_TESTS)
+     enable_testing()
+ endif()
+ 
+-add_subdirectory(externals/tinyxml)
+ add_subdirectory(externals/simplecpp)
+ add_subdirectory(lib)   # CppCheck Library 
+ add_subdirectory(cli)   # Client application
+diff -urp cppcheck-1.87.orig/gui/CMakeLists.txt cppcheck-1.87/gui/CMakeLists.txt
+--- cppcheck-1.87.orig/gui/CMakeLists.txt	2019-02-09 03:31:27.000000000 -0500
++++ cppcheck-1.87/gui/CMakeLists.txt	2019-02-09 13:30:01.410480706 -0500
+@@ -10,7 +10,6 @@ if (BUILD_GUI)
+     endif()
+ 
+     include_directories(${PROJECT_SOURCE_DIR}/lib/)
+-    include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/externals/tinyxml/)
+ 
+     file(GLOB hdrs "*.h")
+     file(GLOB srcs "*.cpp")
+@@ -20,11 +19,11 @@ if (BUILD_GUI)
+     QT5_ADD_RESOURCES(resources "gui.qrc")
+     QT5_ADD_TRANSLATION(qms ${tss})
+ 
+-    add_executable(cppcheck-gui ${hdrs} ${srcs} ${uis_hdrs} ${resources} ${qms} $<TARGET_OBJECTS:lib_objs> $<TARGET_OBJECTS:tinyxml_objs> $<TARGET_OBJECTS:simplecpp_objs>)
++    add_executable(cppcheck-gui ${hdrs} ${srcs} ${uis_hdrs} ${resources} ${qms} $<TARGET_OBJECTS:lib_objs> $<TARGET_OBJECTS:simplecpp_objs>)
+     if (HAVE_RULES)
+         target_link_libraries(cppcheck-gui pcre)
+     endif()
+-    target_link_libraries(cppcheck-gui Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport)
++    target_link_libraries(cppcheck-gui tinyxml2 Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport)
+ 
+     install(TARGETS cppcheck-gui RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR} COMPONENT applications)
+     install(FILES ${qms} DESTINATION ${CMAKE_INSTALL_FULL_BINDIR} COMPONENT applications)
+diff -urp cppcheck-1.87.orig/test/CMakeLists.txt cppcheck-1.87/test/CMakeLists.txt
+--- cppcheck-1.87.orig/test/CMakeLists.txt	2019-02-09 03:31:27.000000000 -0500
++++ cppcheck-1.87/test/CMakeLists.txt	2019-02-09 13:30:01.410480706 -0500
+@@ -1,16 +1,16 @@
+ if (BUILD_TESTS)
+ 
+     include_directories(${PROJECT_SOURCE_DIR}/lib/ ${PROJECT_SOURCE_DIR}/cli/)
+-    include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/externals/tinyxml)
+     include_directories(${PROJECT_SOURCE_DIR}/externals/simplecpp/)
+ 
+     file(GLOB hdrs "*.h")
+     file(GLOB srcs "*.cpp")
+ 
+-    add_executable(testrunner ${hdrs} ${srcs} $<TARGET_OBJECTS:lib_objs> $<TARGET_OBJECTS:cli_objs> $<TARGET_OBJECTS:tinyxml_objs> $<TARGET_OBJECTS:simplecpp_objs>)
++    add_executable(testrunner ${hdrs} ${srcs} $<TARGET_OBJECTS:lib_objs> $<TARGET_OBJECTS:cli_objs> $<TARGET_OBJECTS:simplecpp_objs>)
+     if (HAVE_RULES)
+         target_link_libraries(testrunner pcre)
+     endif()
++    target_link_libraries(testrunner tinyxml2)
+ 
+     add_custom_target(copy_cfg ALL
+         COMMENT "Copying cfg files")

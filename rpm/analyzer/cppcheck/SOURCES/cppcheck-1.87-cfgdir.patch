@@ -1,0 +1,14 @@
+diff -urp cppcheck-1.87.orig/cmake/options.cmake cppcheck-1.87/cmake/options.cmake
+--- cppcheck-1.87.orig/cmake/options.cmake	2019-02-09 03:31:27.000000000 -0500
++++ cppcheck-1.87/cmake/options.cmake	2019-02-09 13:17:25.237561852 -0500
+@@ -22,6 +22,10 @@ option(ANALYZE_UNDEFINED    "Clang dynam
+ option(ANALYZE_DATAFLOW     "Clang dynamic analyzer: general dynamic dataflow analysis."    OFF)
+ option(WARNINGS_ARE_ERRORS  "Treat warnings as errors"                                      OFF)
+ option(WARNINGS_ANSI_ISO    "Issue all the mandatory diagnostics Listed in C standard"      ON)
++option(CFGDIR "Configuration file directory"                                               OFF)
++if(CFGDIR)
++    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCFG=${CFGDIR}")
++endif(CFGDIR)
+ 
+ set(USE_MATCHCOMPILER "Auto" CACHE STRING "Usage of match compiler")
+ set_property(CACHE USE_MATCHCOMPILER PROPERTY STRINGS Auto Off On Verify) 
