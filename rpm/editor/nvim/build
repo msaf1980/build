@@ -3,7 +3,8 @@
 NAME="neovim"
 URL="https://github.com/neovim/neovim"
 DIR=$( dirname $0 )
+VERSION="${1:-0.5}"
 
-sudo pip3 install neovim
+#sudo pip3 install neovim
 [ "${DIR}" == "." ] && SPEC="${NAME}.spec" || SPEC="${DIR}/${NAME}.spec"
-git-build-rpm -n "${NAME}" -u "${URL}" -s "${SPEC}" -b release-0.3
+git-build-rpm -n "${NAME}" -u "${URL}" -s "${SPEC}" -b master -v "${VERSION}"
